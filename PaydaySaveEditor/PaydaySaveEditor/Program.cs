@@ -40,8 +40,8 @@ namespace PD2
 
 				try
 				{
-					SaveFile file = new SaveFile(options.InputPath, !options.EncryptOutput);
-					file.Save(options.OutputPath, options.EncryptOutput);
+					SaveFile file = SaveFile.Load(options.InputPath, !options.EncryptOutput);
+                    SaveFile.Save(file, options.OutputPath, options.EncryptOutput);
 				}
 				catch (Exception e) { Console.WriteLine("An unknown error has occured: {0}", e.Message); }
 			}
