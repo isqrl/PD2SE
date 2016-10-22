@@ -53,12 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameSave\DataBlock.cs" />
-    <Compile Include="GameSave\UnencodedString.cs" />
-    <Compile Include="GameSave\Encryption.cs" />
-    <Compile Include="GameSave\GameData.cs" />
-    <Compile Include="GameSave\GameDataBlock.cs" />
-    <Compile Include="GameSave\SaveFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
