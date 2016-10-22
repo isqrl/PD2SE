@@ -30,7 +30,12 @@ The gamedata block appears to contain a serialized dictionary
 
 namespace PD2.GameSave
 {
-    public class SaveFile
+    public interface ISaveFile
+    {
+        Dictionary<object, object> GameData { get; set; }
+    }
+
+    public class SaveFile : ISaveFile
     {
         private const int SAVE_VERSION = 10; // BETA = 9, RETAIL = 10
 
@@ -51,7 +56,7 @@ namespace PD2.GameSave
             this.filePath = filePath;
         }
 
-        public static SaveFile Load(string filePath, bool encrypted = true)
+        public static ISaveFile Load(string filePath, bool encrypted = true)
         {
             byte[] file = File.ReadAllBytes(filePath);
             byte[] data = encrypted ? Encryption.TransformData(file) : file;
@@ -75,13 +80,19 @@ namespace PD2.GameSave
             }
         }
 
-        public static void Save(SaveFile saveFile, bool encrypt = true)
+        public static void Save(ISaveFile saveFileIf, bool encrypt = true)
         {
+            var saveFile = saveFileIf as SaveFile;
+            if (saveFile == null) throw new ArgumentNullException(nameof(saveFile));
+
             Save(saveFile, saveFile.filePath, encrypt);
         }
 
-        public static void Save(SaveFile saveFile, string outputPath, bool encrypt = true)
+        public static void Save(ISaveFile saveFileIf, string outputPath, bool encrypt = true)
         {
+            var saveFile = saveFileIf as SaveFile;
+            if (saveFile == null) throw new ArgumentNullException(nameof(saveFile));
+
             using (MemoryStream ms = new MemoryStream())
             {
                 using (BinaryWriter bw = new BinaryWriter(ms))
